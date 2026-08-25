@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IUNA UI v1</title>
+<style>
+:root{--bg:#F7F6F2;--s:#fff;--t:#171717;--m:#6B6964;--l:#E5E1DA;--g:#18A66A;--gb:#E9F8F1;--b:#3576E8;--bb:#ECF3FF;--a:#B97A13;--ab:#FFF4DC}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:Pretendard,"Noto Sans KR",system-ui,sans-serif;letter-spacing:-.02em}button,input,select,textarea{font:inherit}button{cursor:pointer}
+.shell{display:grid;grid-template-columns:220px 1fr;min-height:100vh}.side{background:#fff;border-right:1px solid var(--l);padding:24px 18px;position:sticky;top:0;height:100vh}.brand{font-weight:900;letter-spacing:.08em;font-size:20px;margin:8px 10px 28px}.label{font-size:11px;color:#999;margin:20px 10px 8px;font-weight:700}.nav{width:100%;border:0;background:transparent;text-align:left;padding:11px 12px;border-radius:10px;font-weight:700;color:#555}.nav.active{background:#111;color:#fff}
+.main{max-width:1120px;width:100%;margin:auto;padding:0 28px 70px}.top{height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(247,246,242,.94);backdrop-filter:blur(12px);z-index:10;border-bottom:1px solid rgba(229,225,218,.7)}.top strong{font-size:20px;letter-spacing:.07em}.icon{border:0;background:transparent;font-size:20px}
+.page{display:none;padding:26px 0 96px}.page.on{display:block}h1{font-size:28px;margin:0 0 8px}h2{font-size:19px;margin:0}h3{font-size:16px;margin:0}.muted{color:var(--m);font-size:14px;line-height:1.6}.cap{color:#999;font-size:12px}.section{margin-top:34px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.card{background:#fff;border:1px solid var(--l);border-radius:16px;box-shadow:0 4px 16px rgba(0,0,0,.04)}.primary,.secondary{border-radius:10px;padding:11px 15px;font-weight:750}.primary{background:#111;color:#fff;border:0}.secondary{background:#fff;border:1px solid var(--l)}.primary:disabled{opacity:.3}.textbtn{border:0;background:transparent;color:#666}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:18px}.quick{display:grid;grid-template-columns:1fr 1fr;gap:12px}.q{padding:18px;text-align:left;min-height:128px;display:flex;flex-direction:column;justify-content:space-between}.q .ico{width:42px;height:42px;border-radius:50%;background:#F2F0EB;display:grid;place-items:center;font-size:20px}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);padding:16px}.sum{padding:0 16px;border-right:1px solid var(--l)}.sum:first-child{padding-left:0}.sum:last-child{border:0}.sum b{display:block;font-size:22px;margin-top:5px}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}.badge{font-size:11px;font-weight:700;background:#F0EEE9;padding:4px 7px;border-radius:999px}.green{background:var(--gb);color:var(--g)}.blue{background:var(--bb);color:var(--b)}.amber{background:var(--ab);color:var(--a)}.gray{background:#F1F1EF;color:#777}
+.list{background:#fff;border-top:1px solid var(--l);border-bottom:1px solid var(--l)}.row{display:flex;gap:13px;align-items:center;padding:15px 0;border-bottom:1px solid var(--l)}.row:last-child{border:0}.thumb{width:68px;height:52px;border-radius:10px;background:linear-gradient(135deg,#cabfae,#665d50);flex:0 0 auto}.thumb.alt{background:linear-gradient(135deg,#c2ced0,#58666c)}.grow{flex:1;min-width:0}.title{font-size:15px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:12px;color:#999;margin-top:4px}.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}.filter{border:1px solid var(--l);background:#fff;padding:7px 10px;border-radius:999px;font-size:12px}.filter.on{background:#111;color:#fff;border-color:#111}
+.pagehead{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px}.detail,.form{max-width:760px;margin:auto}.detail h1{font-size:30px;margin:12px 0 18px}.block{padding:22px 0;border-bottom:1px solid var(--l)}.info{display:grid;gap:9px;margin-top:14px;font-size:14px}.sticky{position:sticky;bottom:18px;margin-top:20px;background:rgba(255,255,255,.96);padding:10px;border:1px solid var(--l);border-radius:14px;box-shadow:0 10px 35px rgba(0,0,0,.08)}.sticky button{width:100%;padding:14px}
+.field{display:grid;gap:7px;margin-top:14px}.field label{font-size:13px;font-weight:800}.field input,.field select,.field textarea{width:100%;border:1px solid var(--l);background:#fff;padding:12px;border-radius:10px}.field textarea{min-height:110px}.types{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:14px}.type{padding:16px 8px;border:1px solid var(--l);background:#fff;border-radius:12px}.type.on{border-color:#111;box-shadow:inset 0 0 0 1px #111}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:22px}
+.profile{display:flex;gap:14px;align-items:center;padding:18px}.avatar{width:64px;height:64px;border-radius:50%;background:#DDD7CC;display:grid;place-items:center;font-weight:800;font-size:22px}.simple{background:#fff;border-top:1px solid var(--l);border-bottom:1px solid var(--l)}.srow{display:flex;justify-content:space-between;gap:18px;padding:15px 0;border-bottom:1px solid var(--l);font-size:14px}.srow:last-child{border:0}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat{padding:17px}.stat b{display:block;font-size:24px;margin-top:7px}.adminacts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.adminact{padding:18px;min-height:110px;text-align:left}
+.table{overflow:auto;background:#fff;border-top:1px solid var(--l);border-bottom:1px solid var(--l)}table{border-collapse:collapse;width:100%;min-width:760px}th,td{padding:13px 12px;border-bottom:1px solid var(--l);font-size:13px;text-align:left}th{background:#FAF9F6;color:#666}.bottom{display:none}.proto-switch{position:fixed;right:18px;top:78px;z-index:50;background:#111;color:#fff;border-radius:12px;padding:8px;box-shadow:0 8px 28px rgba(0,0,0,.16);font-size:11px}
+.proto-switch .proto-label{opacity:.6;padding:0 6px 5px}
+.proto-switch .proto-buttons{display:flex;gap:4px}
+.proto-switch button{border:0;background:#2B2B2B;color:#aaa;padding:6px 8px;border-radius:8px;font-size:11px}
+.proto-switch button.on{background:#fff;color:#111;font-weight:800}
+.perm-hidden{display:none!important}
+.toast{position:fixed;right:18px;bottom:18px;background:#111;color:#fff;padding:12px 16px;border-radius:12px;opacity:0;transition:.2s}.toast.on{opacity:1}
+@media(max-width:880px){.proto-switch{top:auto;right:10px;bottom:78px;transform:scale(.92);transform-origin:bottom right}.shell{display:block}.side{display:none}.main{padding:0 16px 90px}.top{height:58px}.hero{grid-template-columns:1fr}.summary{grid-template-columns:1fr 1fr;padding:0}.sum{padding:14px 16px;border-bottom:1px solid var(--l);border-right:0}.sum:nth-child(odd){border-right:1px solid var(--l)}.sum:nth-last-child(-n+2){border-bottom:0}.types{grid-template-columns:repeat(2,1fr)}.twocol{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.adminacts{grid-template-columns:1fr}.table{overflow:auto}.bottom{display:flex;position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--l);padding:8px 8px calc(8px + env(safe-area-inset-bottom));justify-content:space-around;z-index:20}.bottom button{border:0;background:transparent;color:#777;font-size:11px;display:flex;flex-direction:column;gap:3px;align-items:center}.bottom button.on{color:#111;font-weight:800}.bottom span{font-size:19px}.sticky{bottom:78px}}
+</style>
+</head>
+<body>
+<div class="proto-switch">
+  <div class="proto-label">PROTOTYPE ROLE · <span id="protoRoleStatus">정회원</span></div>
+  <div class="proto-buttons" style="flex-wrap:wrap;max-width:360px">
+    <button id="roleAssociate" onclick="setRole('associate')">준회원</button>
+    <button id="roleRegular" class="on" onclick="setRole('regular')">정회원</button>
+    <button id="roleOperator" onclick="setRole('operator')">일반 운영진</button>
+    <button id="roleMemberAdmin" onclick="setRole('member_admin')">회원 관리</button>
+    <button id="roleMeetingAdmin" onclick="setRole('meeting_admin')">모임 관리</button>
+    <button id="roleSuperAdmin" onclick="setRole('super_admin')">슈퍼 운영진</button>
+  </div>
+</div>
+<div class="shell">
+<aside class="side"><div class="brand">IUNA</div><div class="label">MEMBER</div>
+<button class="nav active" data-p="home" onclick="go('home')">홈</button><button class="nav" data-p="meetings" onclick="go('meetings')">모임</button><button class="nav" data-p="my" onclick="go('my')">마이</button>
+<div class="operator-only perm-hidden">
+  <div class="label">OPERATOR</div>
+  <button class="nav" data-p="admin" onclick="go('admin')">관리 홈</button>
+  <button class="nav" data-p="members" onclick="go('members')">회원 조회</button>
+  <button class="nav meeting-admin-only perm-hidden" data-p="adminMeetings" onclick="go('adminMeetings')">모임 관리</button>
+  <button class="nav meeting-admin-only perm-hidden" data-p="meetingApproval" onclick="go('meetingApproval')">모임 승인</button>
+  
+</div></aside>
+<main class="main"><header class="top"><strong id="ht">IUNA</strong><button class="icon" onclick="toast('새 알림 3개')">♢</button></header>
+
+<section id="home" class="page on"><div class="hero"><div><div class="cap" id="homeRole">정회원 · #20000</div><h1>안녕하세요, 혜빈님 👋</h1><p class="muted">함께 배우고 성장할 활동을 찾아보세요.</p></div>
+<div class="quick"><button class="card q" onclick="go('meetings')"><div class="ico">⌕</div><div><h3>모임 둘러보기</h3><div class="cap">참여 가능한 활동을 찾아보세요.</div></div></button><button class="card q" onclick="go('create')"><div class="ico">＋</div><div><h3>모임 개설하기</h3><div class="cap">직접 활동을 시작해보세요.</div></div></button></div></div>
+<div class="section"><div class="section-head"><h2>내 활동 요약</h2></div>
+<div class="card summary">
+  <div class="sum"><span class="cap">개설한 모임</span><b>4</b></div>
+  <div class="sum"><span class="cap">신청/참여</span><b>6</b></div>
+  <div class="sum associate-only perm-hidden"><span class="cap">보유 포인트</span><b>4점</b></div>
+  <div class="sum associate-only perm-hidden"><span class="cap">정회원 승급</span><b style="font-size:16px">1점 남음</b></div>
+</div></div>
+<div class="section"><div class="section-head"><h2>모집중인 모임</h2><button class="textbtn" onclick="go('meetings')">전체보기 →</button></div><div class="list">
+<div class="row" onclick="go('detail')"><div class="thumb"></div><div class="grow"><div class="badges"><span class="badge">프로젝트</span><span class="badge green">모집중</span></div><div class="title">프로젝트 포인트 지정 가능할까?</div><div class="meta">한훈규 · 8.18 (월) 19:00 · 정원 10명</div></div></div>
+<div class="row" onclick="go('detail')"><div class="thumb alt"></div><div class="grow"><div class="badges"><span class="badge">강연</span><span class="badge green">모집중</span></div><div class="title">AI 활용 사례 강연</div><div class="meta">이지나 · 8.28 (목) 20:00 · 정원 30명</div></div></div></div></div></section>
+
+<section id="meetings" class="page"><div class="pagehead"><div><div class="cap">8개의 모임</div><h1>모임</h1></div><button class="primary" onclick="go('create')">모임 개설</button></div>
+<div class="filters"><button class="filter on">전체</button><button class="filter">모집중</button><button class="filter">활동중</button><button class="filter">종료</button></div><div class="filters"><button class="filter on">전체</button><button class="filter">스터디</button><button class="filter">프로젝트</button><button class="filter">강연</button><button class="filter">번개</button></div>
+<div class="list"><div class="row" onclick="go('detail')"><div class="thumb"></div><div class="grow"><div class="badges"><span class="badge">프로젝트</span><span class="badge green">모집중</span></div><div class="title">프로젝트 포인트 지정 가능할까?</div><div class="meta">한훈규 · 8.18 (월) 19:00 · 정원 10명</div></div></div>
+<div class="row" onclick="go('detail')"><div class="thumb alt"></div><div class="grow"><div class="badges"><span class="badge">프로젝트</span><span class="badge green">모집중</span></div><div class="title">이건 신청 안 되어야 함</div><div class="meta">한훈규 · 9.01 (화) 19:00</div></div></div>
+<div class="row" onclick="go('detail')"><div class="thumb"></div><div class="grow"><div class="badges"><span class="badge">번개</span><span class="badge gray">종료</span></div><div class="title">1점짜리 모임</div><div class="meta">9.01 (화) 19:00</div></div></div></div></section>
+
+<section id="detail" class="page"><div class="detail"><div class="badges"><span class="badge">프로젝트</span><span class="badge green">모집중</span></div><h1>프로젝트 포인트 지정 가능할까?</h1><div class="info"><div>◷ 2026.08.18 (월) 19:00 · 2시간</div><div>⌖ 서울 강남구</div><div>◎ 정원 10명 / 모집 6명</div></div><div class="block"><h2>모임 소개</h2><p class="muted">프로젝트 포인트 지정 방식에 대해 함께 논의하고 실제 사례를 적용해보는 시간을 가져요.</p></div><div class="block"><h2>주요 내용</h2><p class="muted">포인트 정책 공유 · 사례 분석 · 프로젝트 적용 · Q&A</p></div><div class="sticky"><button class="primary" onclick="toast('모임 신청이 완료되었습니다')">신청하기</button></div></div></section>
+
+<section id="create" class="page"><div class="form"><div class="pagehead"><div><div class="cap">새로운 활동 만들기</div><h1>모임 개설</h1></div></div><div class="block"><h2>모임 유형</h2><div class="types"><button class="type">스터디</button><button class="type on">프로젝트</button><button class="type" onclick="lecture()">강연</button><button class="type">번개</button><button class="type">정기 네트워킹</button></div></div><div class="block"><h2>기본 정보</h2><div class="field"><label>모임명</label><input placeholder="모임명을 입력해주세요"></div><div class="field"><label>한 줄 소개</label><input placeholder="모임을 한 줄로 소개해주세요"></div><div class="field"><label>모임 목표</label><textarea placeholder="무엇을 이루고 싶나요?"></textarea></div></div><div class="block"><h2>일정 및 모집</h2><div class="twocol"><div class="field"><label>시작 일시</label><input type="datetime-local"></div><div class="field"><label>모집 마감</label><input type="datetime-local"></div></div></div><div class="block" id="lecture" style="display:none"><h2>강연 조건</h2><div class="twocol"><div class="field"><label>강연 참가비</label><input type="number"></div><div class="field"><label>강연자 보상</label><input type="number"></div></div><div class="field"><label>협회 수익 배분 비율</label><input type="number" max="100"></div></div><div class="actions"><button class="secondary" onclick="toast('임시 저장되었습니다')">임시 저장</button><button class="primary" onclick="toast('승인 요청이 접수되었습니다')">승인 요청</button></div></div></section>
+
+<section id="my" class="page">
+<div class="pagehead"><div><div class="cap">내 계정</div><h1>마이페이지</h1></div></div>
+<div class="card profile"><div class="avatar">성</div><div><h2>성혜빈</h2><div class="muted" id="myRole">20000 · 정회원 <span class="badge green">활동</span></div></div></div>
+
+<div class="section">
+  <div class="section-head"><h2>프로필</h2><button class="textbtn" onclick="toast('프로필 수정 화면 예시')">수정 →</button></div>
+  <div class="simple">
+    <div class="srow"><span>소속</span><span class="muted">등록된 정보 없음</span></div>
+    <div class="srow"><span>직무</span><span class="muted">등록된 정보 없음</span></div>
+    <div class="srow"><span>자기소개</span><span class="muted">등록된 정보 없음</span></div>
+    <div class="srow"><span>관심사</span><span class="muted">등록된 정보 없음</span></div>
+  </div>
+</div>
+
+<div class="section"><div class="section-head"><h2>회원 정보</h2></div><div class="simple">
+  <div class="srow associate-only perm-hidden"><span>보유 포인트</span><b>4점</b></div>
+  <div class="srow associate-only perm-hidden"><span>정회원 승급까지</span><span>1점 남음</span></div>
+  <div class="srow"><span>회원번호</span><b class="member-number">20000</b></div>
+  <div class="srow"><span>회원 상태</span><span class="badge green">활동</span></div>
+</div></div>
+
+<div class="section">
+  <div class="section-head"><h2>내가 개설한 모임</h2><button class="textbtn" onclick="go('meetings')">전체보기 →</button></div>
+  <div class="list">
+    <div class="row" onclick="go('detail')"><div class="grow"><div class="badges"><span class="badge">프로젝트</span><span class="badge green">모집중</span></div><div class="title">프로젝트 포인트 지정 가능할까?</div><div class="meta">8.18 (월) 19:00 · 정원 10명</div></div><span>→</span></div>
+    <div class="row" onclick="go('detail')"><div class="grow"><div class="badges"><span class="badge">강연</span><span class="badge gray">종료</span></div><div class="title">2점짜리 모임</div><div class="meta">8.18 (월) 19:00</div></div><span>→</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-head"><h2>참여 중인 모임</h2><button class="textbtn" onclick="go('meetings')">전체보기 →</button></div>
+  <div class="list">
+    <div class="row" onclick="go('detail')"><div class="grow"><div class="badges"><span class="badge">스터디</span><span class="badge blue">활동중</span></div><div class="title">테스트 스터디</div><div class="meta">다음 일정 · 8.29 (금) 19:30</div></div><span>→</span></div>
+    <div class="row" onclick="go('detail')"><div class="grow"><div class="badges"><span class="badge">프로젝트</span><span class="badge green">모집중</span></div><div class="title">UX 리서치 프로젝트</div><div class="meta">참여 확정 · 9.02 시작</div></div><span>→</span></div>
+  </div>
+</div>
+
+<div class="section"><button class="secondary" style="width:100%" onclick="toast('로그아웃 처리')">로그아웃</button></div>
+</section>
+
+<section id="admin" class="page">
+<div class="pagehead"><div><div class="cap" id="adminRoleLabel">운영진</div><h1>관리 홈</h1></div></div>
+
+<div class="section" style="margin-top:0">
+  <div class="section-head"><h2>내 관리 권한</h2></div>
+  <div class="simple" id="permissionSummary"></div>
+</div>
+
+<div class="section">
+  <div class="section-head"><h2>바로가기</h2></div>
+  <div class="adminacts">
+    <button class="card adminact" onclick="go('members')"><span class="cap">회원</span><h3>회원 정보 조회 →</h3></button>
+    <button class="card adminact meeting-admin-only perm-hidden" onclick="go('adminMeetings')"><span class="cap">모임</span><h3>모임 관리 →</h3></button>
+    <button class="card adminact meeting-admin-only perm-hidden" onclick="go('meetingApproval')"><span class="cap">승인</span><h3>모임 승인 →</h3></button>
+    
+  </div>
+</div>
+
+<div class="section member-admin-only super-admin-only perm-hidden">
+  <div class="section-head"><h2>회원 관리</h2></div>
+  <div class="adminacts">
+    <button class="card adminact" onclick="go('members')"><span class="cap">승급</span><h3>승급 대상 회원 2명 →</h3></button>
+  </div>
+</div>
+
+<div class="section meeting-admin-only perm-hidden">
+  <div class="section-head"><h2>모임 관리</h2></div>
+  <div class="adminacts">
+    <button class="card adminact" onclick="go('meetingApproval')"><span class="cap">승인</span><h3>승인 대기 모임 1개 →</h3></button>
+  </div>
+</div>
+</section>
+
+<section id="members" class="page">
+<div class="pagehead">
+  <div>
+    <div class="cap">관리 · 회원</div>
+    <h1>회원 관리</h1>
+    <p class="muted" style="margin-top:6px">회원 조회, 정회원 승급, 운영진 지정을 한 화면에서 처리합니다.</p>
+  </div>
+</div>
+
+<div class="filters">
+  <button class="filter on">전체</button>
+  <button class="filter">준회원</button>
+  <button class="filter">정회원</button>
+  <button class="filter">명예회원</button>
+</div>
+<div class="filters" style="margin-top:8px">
+  <button class="filter on">전체</button>
+  <button class="filter">활동</button>
+  <button class="filter">휴면</button>
+  <button class="filter">탈퇴</button>
+  <button class="filter">제명</button>
+</div>
+
+<div class="field" style="margin-top:16px">
+  <input placeholder="회원번호 또는 이름 검색">
+</div>
+
+<div class="cap" style="margin:10px 0 14px">
+  모든 운영진은 회원 정보를 조회할 수 있습니다. 추가 action은 현재 운영진 권한과 대상 회원 등급/상태에 따라 표시됩니다.
+</div>
+
+<div class="table">
+<table>
+<thead>
+<tr>
+  <th>회원번호</th>
+  <th>이름</th>
+  <th>등급</th>
+  <th>상태</th>
+  <th>가입일</th>
+  <th>포인트</th>
+  <th>관리</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>10004</td>
+  <td>성혜빈</td>
+  <td>정회원</td>
+  <td><span class="badge green">활동</span></td>
+  <td>2026.08.09</td>
+  <td>—</td>
+  <td>
+    <button class="secondary" onclick="toast('회원 상세 조회')">상세</button>
+    <button class="primary role-admin-only perm-hidden" onclick="openRoleAssign('성혜빈','10004')">운영진 지정</button>
+  </td>
+</tr>
+<tr>
+  <td>10003</td>
+  <td>—</td>
+  <td>정회원</td>
+  <td><span class="badge green">활동</span></td>
+  <td>2026.08.17</td>
+  <td>—</td>
+  <td>
+    <button class="secondary" onclick="toast('회원 상세 조회')">상세</button>
+    <button class="primary role-admin-only perm-hidden" onclick="openRoleAssign('회원 10003','10003')">운영진 지정</button>
+  </td>
+</tr>
+<tr>
+  <td>10005</td>
+  <td>한훈규</td>
+  <td>정회원</td>
+  <td><span class="badge green">활동</span></td>
+  <td>2026.08.17</td>
+  <td>—</td>
+  <td>
+    <button class="secondary" onclick="toast('회원 상세 조회')">상세</button>
+    <button class="primary role-admin-only perm-hidden" onclick="openRoleAssign('한훈규','10005')">운영진 지정</button>
+  </td>
+</tr>
+<tr>
+  <td>90003</td>
+  <td>테스트</td>
+  <td>준회원</td>
+  <td><span class="badge green">활동</span></td>
+  <td>2026.08.17</td>
+  <td>6점 <span class="badge green">승급 대상</span></td>
+  <td>
+    <button class="secondary" onclick="toast('회원 상세 조회')">상세</button>
+    <button class="primary grade-change-only perm-hidden" onclick="toast('정회원 승급 완료')">정회원 승급</button>
+  </td>
+</tr>
+<tr>
+  <td>90009</td>
+  <td>성혜빈02</td>
+  <td>준회원</td>
+  <td><span class="badge green">활동</span></td>
+  <td>2026.08.17</td>
+  <td>0점</td>
+  <td>
+    <button class="secondary" onclick="toast('회원 상세 조회')">상세</button>
+    <button class="primary grade-change-only perm-hidden" disabled>정회원 승급</button>
+  </td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="roleAssignPanel" class="card" style="display:none;margin-top:18px;padding:18px">
+  <div class="section-head">
+    <div>
+      <div class="cap">슈퍼 운영진 전용</div>
+      <h2 id="roleAssignMember">운영진 지정</h2>
+    </div>
+    <button class="textbtn" onclick="closeRoleAssign()">닫기</button>
+  </div>
+  <div class="field">
+    <label>회원번호</label>
+    <input id="roleAssignNo" disabled>
+  </div>
+  <div class="field">
+    <label>부여할 운영진 역할</label>
+    <select id="roleAssignSelect">
+      <option value="operator">일반 운영진</option>
+      <option value="member_admin">회원 관리 운영진</option>
+      <option value="meeting_admin">모임 관리 운영진</option>
+      <option value="super_admin">슈퍼 운영진</option>
+    </select>
+  </div>
+  <div class="actions">
+    <button class="secondary" onclick="closeRoleAssign()">취소</button>
+    <button class="primary" onclick="saveRoleAssign()">운영진 지정</button>
+  </div>
+</div>
+</section>
+
+<section id="adminMeetings" class="page">
+<div class="pagehead"><div><div class="cap">관리 · 모임</div><h1>모임 관리</h1></div></div>
+<div class="filters"><button class="filter on">전체</button><button class="filter">승인 대기</button><button class="filter">모집중</button><button class="filter">활동중</button><button class="filter">종료</button></div>
+<div class="list">
+  <div class="row"><div class="thumb"></div><div class="grow"><div class="badges"><span class="badge">프로젝트</span><span class="badge amber">승인 대기</span></div><div class="title">프로젝트 포인트 지정 가능할까?</div><div class="meta">한훈규 · 8.18 19:00</div></div><button class="secondary" onclick="toast('모임 상세 관리')">관리</button></div>
+  <div class="row"><div class="thumb alt"></div><div class="grow"><div class="badges"><span class="badge">프로젝트</span><span class="badge green">모집중</span></div><div class="title">이건 신청 안 되어야 함</div><div class="meta">한훈규 · 9.01 19:00</div></div><button class="secondary" onclick="toast('모임 상세 조회')">상세</button></div>
+</div>
+</section>
+
+
+<section id="meetingApproval" class="page">
+  <div class="pagehead">
+    <div>
+      <div class="cap">관리 · 모임 승인</div>
+      <h1>모임 승인</h1>
+      <p class="muted" style="margin-top:6px">개설 요청된 모임을 확인하고 승인 또는 반려합니다.</p>
+    </div>
+    <span class="badge amber" style="font-size:12px;padding:6px 9px">승인 대기 1건</span>
+  </div>
+
+  <div class="section" style="margin-top:0">
+    <div class="section-head">
+      <h2>승인 대기</h2>
+      <button class="textbtn" onclick="toast('목록을 새로고침했습니다')">새로고침 ↻</button>
+    </div>
+
+    <div class="card" style="padding:0 18px">
+      <div class="row" style="padding:18px 0;align-items:flex-start">
+        <div class="grow">
+          <div class="badges">
+            <span class="badge">스터디</span>
+            <span class="badge amber">승인 대기</span>
+          </div>
+          <div class="title" style="font-size:17px;margin-top:2px">AI 스터디</div>
+          <div class="meta" style="margin-top:8px">2026. 08. 25. 생성 · 개설자 한훈규</div>
+          <div class="meta">정원 8명 · 시작 2026. 09. 01.</div>
+        </div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end">
+          <button class="secondary" onclick="go('detail')">상세</button>
+          <button class="primary meeting-approve-only perm-hidden" onclick="approveMeeting(this)">승인</button>
+          <button class="secondary meeting-approve-only perm-hidden" style="color:#C94A45;border-color:#E9C8C6" onclick="toggleReject()">반려</button>
+        </div>
+      </div>
+
+      <div id="rejectPanel" style="display:none;border-top:1px solid var(--l);padding:18px 0">
+        <h3>반려 사유</h3>
+        <p class="cap" style="margin-top:5px">개설자에게 전달할 사유를 입력해주세요.</p>
+        <div class="field">
+          <textarea id="rejectReason" placeholder="반려 사유를 입력해주세요"></textarea>
+        </div>
+        <div class="actions" style="margin-top:12px">
+          <button class="secondary" onclick="toggleReject()">취소</button>
+          <button class="primary" style="background:#C94A45" onclick="rejectMeeting()">반려 확정</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2>처리 기준</h2></div>
+    <div class="simple">
+      <div class="srow"><span>승인</span><span class="muted">검토 후 모집중 상태로 전환</span></div>
+      <div class="srow"><span>반려</span><span class="muted">반려 사유 입력 필수</span></div>
+    </div>
+  </div>
+</section>
+
+
+<nav class="bottom"><button class="on" data-p="home" onclick="go('home')"><span>⌂</span>홈</button><button data-p="meetings" onclick="go('meetings')"><span>♧</span>모임</button><button data-p="my" onclick="go('my')"><span>♙</span>마이</button><button class="operator-only perm-hidden" data-p="admin" onclick="go('admin')"><span>♟</span>관리</button></nav>
+</main></div><div class="toast" id="toast"></div>
+<script>
+function go(id){document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));document.getElementById(id).classList.add('on');document.querySelectorAll('[data-p]').forEach(x=>x.classList.toggle('on',x.dataset.p===id));document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.p===id));document.getElementById('ht').textContent={home:'IUNA',meetings:'모임',detail:'모임 상세',create:'모임 개설',my:'마이',admin:'관리',members:'회원 관리',adminMeetings:'모임 관리',meetingApproval:'모임 승인'}[id]||'IUNA';scrollTo({top:0,behavior:'smooth'})}
+function toast(m){let t=document.getElementById('toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1600)}
+function setRole(role){
+  const isAssociate = role==='associate';
+  const isOperator = ['operator','member_admin','meeting_admin','super_admin'].includes(role);
+  const canChangeGrade = ['member_admin','super_admin'].includes(role);
+  const canApproveMeeting = ['meeting_admin','super_admin'].includes(role);
+  const canManageRoles = role==='super_admin';
+
+  const show = (selector, visible) => document.querySelectorAll(selector).forEach(el=>el.classList.toggle('perm-hidden', !visible));
+
+  show('.operator-only', isOperator);
+  show('.associate-only', isAssociate);
+  // Role-specific visibility.
+  // Important: some elements are shared by meeting_admin and super_admin,
+  // so evaluate combined visibility to avoid one selector hiding another.
+  show('.member-admin-only', role==='member_admin' || role==='super_admin');
+  show('.meeting-admin-only', role==='meeting_admin' || role==='super_admin');
+  show('.super-admin-only', role==='super_admin');
+  show('.grade-change-only', canChangeGrade);
+  show('.meeting-approve-only', canApproveMeeting);
+  show('.role-admin-only', canManageRoles);
+
+  ['Associate','Regular','Operator','MemberAdmin','MeetingAdmin','SuperAdmin'].forEach(r=>{
+    const b=document.getElementById('role'+r); if(b) b.classList.remove('on');
+  });
+  const map={associate:'Associate',regular:'Regular',operator:'Operator',member_admin:'MemberAdmin',meeting_admin:'MeetingAdmin',super_admin:'SuperAdmin'};
+  const active=document.getElementById('role'+map[role]); if(active) active.classList.add('on');
+  const protoStatus=document.getElementById('protoRoleStatus');
+  if(protoStatus){
+    protoStatus.textContent =
+      role==='associate'?'준회원':
+      role==='regular'?'정회원':
+      role==='operator'?'일반 운영진':
+      role==='member_admin'?'회원 관리 운영진':
+      role==='meeting_admin'?'모임 관리 운영진':'슈퍼 운영진';
+  }
+
+  const roleLabel = isAssociate ? '준회원 · #90003'
+    : role==='regular' ? '정회원 · #20000'
+    : role==='operator' ? '일반 운영진 · 정회원 · #10010'
+    : role==='member_admin' ? '회원 관리 운영진 · 정회원 · #10011'
+    : role==='meeting_admin' ? '모임 관리 운영진 · 정회원 · #10012'
+    : '슈퍼 운영진 · 정회원 · #10002';
+  document.getElementById('homeRole').textContent = roleLabel;
+
+  const myLabel = isAssociate ? '90003 · 준회원'
+    : role==='regular' ? '20000 · 정회원'
+    : role==='operator' ? '10010 · 일반 운영진 · 정회원'
+    : role==='member_admin' ? '10011 · 회원 관리 운영진 · 정회원'
+    : role==='meeting_admin' ? '10012 · 모임 관리 운영진 · 정회원'
+    : '10002 · 슈퍼 운영진 · 정회원';
+  document.getElementById('myRole').innerHTML = myLabel + ' <span class="badge green">활동</span>';
+
+  const num=document.querySelector('.member-number');
+  if(num) num.textContent=isAssociate?'90003':role==='regular'?'20000':role==='operator'?'10010':role==='member_admin'?'10011':role==='meeting_admin'?'10012':'10002';
+
+  const adminRoleLabel=document.getElementById('adminRoleLabel');
+  if(adminRoleLabel) adminRoleLabel.textContent =
+    role==='operator'?'일반 운영진':
+    role==='member_admin'?'회원 관리 운영진':
+    role==='meeting_admin'?'모임 관리 운영진':
+    role==='super_admin'?'슈퍼 운영진':'운영진';
+
+  const ps=document.getElementById('permissionSummary');
+  if(ps && isOperator){
+    let rows='<div class="srow"><span>회원 정보 전체 조회</span><b>가능</b></div>';
+    rows += '<div class="srow"><span>회원 등급 변경</span><b>'+(canChangeGrade?'가능':'불가')+'</b></div>';
+    rows += '<div class="srow"><span>모임 승인</span><b>'+(canApproveMeeting?'가능':'불가')+'</b></div>';
+    rows += '<div class="srow"><span>운영진 역할 부여</span><b>'+(canManageRoles?'가능':'불가')+'</b></div>';
+    ps.innerHTML=rows;
+  }
+
+  const current=document.querySelector('.page.on')?.id;
+  if(!isOperator && ['admin','members','adminMeetings','meetingApproval'].includes(current)) go('home');
+  if(isOperator && ['adminMeetings','meetingApproval'].includes(current) && !canApproveMeeting) go('admin');
+  if(isOperator && current==='roles' && !canManageRoles) go('admin');
+}
+setRole('regular');
+window.__iunaPermissionSelfTest = function(){
+  const result = {};
+  ['meeting_admin','super_admin'].forEach(role=>{
+    setRole(role);
+    result[role] = [...document.querySelectorAll('[data-p="meetingApproval"]')].map(el=>({
+      text: el.textContent.trim(),
+      hidden: el.classList.contains('perm-hidden')
+    }));
+  });
+  setRole('regular');
+  console.log('IUNA permission self-test', result);
+  return result;
+};
+
+function toggleReject(){
+  const p=document.getElementById('rejectPanel');
+  if(p) p.style.display = p.style.display==='none' ? 'block' : 'none';
+}
+function approveMeeting(btn){
+  toast('모임을 승인했습니다');
+  if(btn){
+    btn.disabled=true;
+    btn.textContent='승인 완료';
+  }
+}
+function rejectMeeting(){
+  const reason=document.getElementById('rejectReason')?.value.trim();
+  if(!reason){ toast('반려 사유를 입력해주세요'); return; }
+  toast('모임을 반려했습니다');
+  toggleReject();
+}
+function openRoleAssign(name,no){
+  const panel=document.getElementById('roleAssignPanel');
+  if(!panel) return;
+  document.getElementById('roleAssignMember').textContent=name+'님 운영진 지정';
+  document.getElementById('roleAssignNo').value=no;
+  panel.style.display='block';
+  panel.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function closeRoleAssign(){
+  const panel=document.getElementById('roleAssignPanel');
+  if(panel) panel.style.display='none';
+}
+function saveRoleAssign(){
+  toast('운영진 역할을 지정했습니다');
+  closeRoleAssign();
+}
+function lecture(){document.querySelectorAll('.type').forEach(x=>x.classList.remove('on'));event.currentTarget.classList.add('on');document.getElementById('lecture').style.display='block'}
+</script></body></html>
