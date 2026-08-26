@@ -18,7 +18,7 @@ export default async function MemberLayout({ children }: { children: React.React
       memberGrade={auth.membership?.grade}
       activeRoles={auth.activeRoles}
     >
-      <AppShell isOperator={auth.isOperator}>
+      <AppShell>
         {children}
       </AppShell>
     </AuthProvider>

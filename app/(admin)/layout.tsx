@@ -25,7 +25,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       memberGrade={auth.membership?.grade}
       activeRoles={auth.activeRoles}
     >
-      <AppShell isOperator={auth.isOperator}>
+      <AppShell>
         {children}
       </AppShell>
     </AuthProvider>
