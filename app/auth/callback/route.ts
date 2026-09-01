@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { finalizeSignupProfile } from '../../../lib/supabase/auth'
 import { createServerSupabaseClient } from '../../../lib/supabase/server'
+import { createAdminSupabaseClient } from '../../../lib/supabase/admin'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
@@ -22,6 +23,27 @@ export async function GET(request: Request) {
 
   if (error || !data.session || !data.user) {
     return NextResponse.redirect(new URL('/auth/error?reason=verify_failed', request.url))
+  }
+
+  const admin = createAdminSupabaseClient()
+  const metadata = (data.user.user_metadata ?? {}) as Record<string, unknown>
+  if (metadata.legacy_migrated === true) {
+    const emailVerified =
+      metadata.migration_email_pending === true &&
+      Boolean(data.user.email) &&
+      !data.user.email?.endsWith('@legacy.iuna.invalid')
+
+    if (emailVerified) {
+      await admin.auth.admin.updateUserById(data.user.id, {
+        user_metadata: {
+          ...metadata,
+          migration_email_pending: false,
+          migration_email_completed_at: new Date().toISOString(),
+        },
+      })
+    }
+
+    return NextResponse.redirect(new URL('/account/setup?email=verified', request.url))
   }
 
   // Diagnostic: log metadata presence and finalize result (no sensitive values)

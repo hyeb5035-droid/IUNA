@@ -28,3 +28,7 @@ pnpm-debug.log*
 
 # Cloudflare local dev vars
 .dev.vars
+
+# Private migration working data and backups
+.migration-work/
+outputs/member-migration-2026-09-01/private-backup/

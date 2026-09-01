@@ -300,6 +300,13 @@ export default async function MemberMyPage() {
           )}
         </section>
 
+        <a
+          href="/account/password"
+          className="flex w-full items-center justify-center rounded-2xl border border-[#DDDCD7] bg-white px-4 py-3 text-sm font-medium transition hover:bg-[#F5F4F1]"
+        >
+          비밀번호 변경
+        </a>
+
         {/* 6. 로그아웃 */}
         <a
           href="/auth/logout"

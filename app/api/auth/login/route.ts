@@ -59,5 +59,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: GENERIC_ERROR }, { status: 401 })
   }
 
-  return NextResponse.json({ ok: true })
+  const metadata = (adminUserData.user.user_metadata ?? {}) as Record<string, unknown>
+
+  return NextResponse.json({
+    ok: true,
+    requires_email: metadata.migration_email_pending === true,
+    requires_password_change: metadata.must_change_password === true,
+  })
 }

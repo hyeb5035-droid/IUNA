@@ -96,7 +96,13 @@ export default function LoginPage() {
       })
 
       if (response.ok) {
-        router.replace('/home')
+        const result = await response.json() as {
+          requires_email?: boolean
+          requires_password_change?: boolean
+        }
+        router.replace(
+          result.requires_email || result.requires_password_change ? '/account/setup' : '/home',
+        )
         return
       }
 
