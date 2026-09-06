@@ -154,59 +154,46 @@ export default async function MemberHomePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F7F6F2] px-4 py-8 text-[#111111] sm:px-6 sm:py-12">
-      <div className="mx-auto max-w-2xl space-y-8">
+    <main className="iuna-page">
+      <div className="iuna-container space-y-8">
 
         {/* Welcome header - name is primary, metadata is secondary */}
-        <header className="space-y-1">
-          <h1 className="text-2xl font-semibold sm:text-3xl">
-            안녕하세요, {memberName}님.
-          </h1>
-          <p className="text-sm text-slate-500">
-            IUNA에서 새로운 활동을 시작해보세요.
-          </p>
-          {metaString && (
-            <p className="text-xs text-slate-400">
-              {metaString}
-            </p>
-          )}
-        </header>
-
-        {/* Primary actions - What to do in IUNA */}
-        <section>
-          <h2 className="mb-3 text-sm font-medium text-slate-500">
-            IUNA에서 무엇을 해볼까요?
-          </h2>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <section className="grid gap-4 lg:grid-cols-[1.15fr_.85fr]">
+          <header className="rounded-[18px] bg-gradient-to-br from-[var(--iuna-navy)] to-[#0A4D78] p-7 text-white sm:p-8">
+            {metaString && <p className="text-xs font-semibold tracking-wide text-[#BFD6E4]">{metaString}</p>}
+            <h1 className="mt-3 text-[28px] font-bold leading-tight sm:text-[30px]">안녕하세요, {memberName}님.</h1>
+            <p className="mt-2 text-sm text-[#D9E8F0]">함께 배우고 성장할 활동을 찾아보세요.</p>
+          </header>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
             <Link
               href="/meetings"
-              className="group flex flex-col rounded-3xl border border-[#DDDCD7] bg-white p-6 shadow-sm transition hover:border-[#0A0A0A]"
+              className="iuna-card-emphasis group flex min-h-28 items-center gap-4 p-5 transition hover:border-[var(--iuna-navy-2)]"
             >
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#F5F4F1]">
-                <svg className="h-5 w-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--iuna-navy-100)]">
+                <svg className="h-5 w-5 text-[var(--iuna-navy)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
-              <h3 className="font-semibold">모임 둘러보기</h3>
-              <p className="mt-1 text-xs text-slate-500">
+              <div><h3 className="font-bold">모임 둘러보기</h3>
+              <p className="mt-1 text-xs text-[var(--iuna-muted)]">
                 새로운 스터디, 프로젝트와 모임을 찾아보세요.
-              </p>
+              </p></div>
             </Link>
 
             {canCreateMeeting && (
               <Link
                 href="/meetings/new"
-                className="group flex flex-col rounded-3xl border border-[#DDDCD7] bg-white p-6 shadow-sm transition hover:border-[#0A0A0A]"
+                className="iuna-card-emphasis group flex min-h-28 items-center gap-4 p-5 transition hover:border-[var(--iuna-navy-2)]"
               >
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#F5F4F1]">
-                  <svg className="h-5 w-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--iuna-navy-100)]">
+                  <svg className="h-5 w-5 text-[var(--iuna-navy)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
                   </svg>
                 </div>
-                <h3 className="font-semibold">모임 개설하기</h3>
-                <p className="mt-1 text-xs text-slate-500">
+                <div><h3 className="font-bold">모임 개설하기</h3>
+                <p className="mt-1 text-xs text-[var(--iuna-muted)]">
                   함께하고 싶은 활동을 직접 시작해보세요.
-                </p>
+                </p></div>
               </Link>
             )}
           </div>
@@ -214,21 +201,19 @@ export default async function MemberHomePage() {
 
         {/* My activity summary - 나의 IUNA */}
         <section>
-          <h2 className="mb-3 text-sm font-medium text-slate-500">
-            나의 IUNA
-          </h2>
+          <h2 className="iuna-section-title mb-3">내 활동 요약</h2>
           {isAssociate ? (
             // Associate member: show points and promotion info
-            <div className="grid grid-cols-3 gap-3">
-              <div className="rounded-2xl border border-[#DDDCD7] bg-white p-4">
+            <div className="iuna-card grid grid-cols-1 divide-y divide-[var(--iuna-line)] sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+              <div className="p-5">
                 <p className="text-xs text-slate-500">신청/참여 모임</p>
                 <p className="mt-1 text-xl font-semibold">{appliedMeetingsCount}</p>
               </div>
-              <div className="rounded-2xl border border-[#DDDCD7] bg-white p-4">
+              <div className="p-5">
                 <p className="text-xs text-slate-500">보유 포인트</p>
                 <p className="mt-1 text-xl font-semibold">{pointTotal ?? 0}점</p>
               </div>
-              <div className="rounded-2xl border border-[#DDDCD7] bg-white p-4">
+              <div className="p-5">
                 <p className="text-xs text-slate-500">정회원 승급</p>
                 <p className="mt-1 text-xl font-semibold">
                   {pointsNeededForPromotion === 0 ? '가능' : `${pointsNeededForPromotion}점 남음`}
@@ -237,12 +222,12 @@ export default async function MemberHomePage() {
             </div>
           ) : (
             // Regular/operator member
-            <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-[#DDDCD7] bg-white p-4">
+            <div className="iuna-card grid grid-cols-2 divide-x divide-[var(--iuna-line)]">
+              <div className="p-5">
                 <p className="text-xs text-slate-500">개설한 모임</p>
                 <p className="mt-1 text-xl font-semibold">{createdMeetingsCount}</p>
               </div>
-              <div className="rounded-2xl border border-[#DDDCD7] bg-white p-4">
+              <div className="p-5">
                 <p className="text-xs text-slate-500">신청/참여 모임</p>
                 <p className="mt-1 text-xl font-semibold">{appliedMeetingsCount}</p>
               </div>
@@ -253,27 +238,27 @@ export default async function MemberHomePage() {
         {/* Recruiting meetings */}
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-medium text-slate-500">모집중인 모임</h2>
-            <Link href="/meetings" className="text-xs text-slate-500 hover:text-[#111111] transition">
+            <h2 className="iuna-section-title">모집중인 모임</h2>
+            <Link href="/meetings" className="text-xs font-semibold text-[var(--iuna-navy)] transition hover:underline">
               전체보기 →
             </Link>
           </div>
           {currentActivity.length > 0 ? (
-            <div className="border-t border-b border-[#E5E1DA] bg-white">
+            <div className="iuna-card overflow-hidden">
               {currentActivity.map((meeting) => (
                 <Link
                   key={meeting.id}
                   href={`/meetings/${meeting.id}`}
-                  className="flex items-center justify-between border-b border-[#E5E1DA] px-4 py-3 text-sm last:border-b-0 transition hover:bg-[#F5F4F1]"
+                  className="flex items-center justify-between border-b border-[var(--iuna-line)] px-4 py-4 text-sm last:border-b-0 transition hover:bg-[var(--iuna-warm)]"
                 >
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="shrink-0 rounded-full bg-[#F5F4F1] px-2 py-0.5 text-xs">
+                    <span className="iuna-badge shrink-0">
                       {MEETING_TYPE_LABEL[meeting.meeting_type] ?? meeting.meeting_type}
                     </span>
                     <span className="truncate font-medium">{meeting.title}</span>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="inline-flex rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-xs text-emerald-700">
+                    <span className="iuna-badge iuna-badge-success">
                       모집중
                     </span>
                     <span className="text-slate-300">→</span>
@@ -282,7 +267,7 @@ export default async function MemberHomePage() {
               ))}
             </div>
           ) : (
-            <div className="border border-[#E5E1DA] bg-white p-4 text-center">
+            <div className="iuna-card p-8 text-center">
               <p className="text-sm text-slate-500">현재 참여 중인 활동이 없습니다.</p>
               <Link href="/meetings" className="mt-2 inline-block text-sm font-medium text-[#111111] hover:underline">
                 새로운 모임을 둘러보세요 →

@@ -90,11 +90,11 @@ export default function MeetingApprovalClient({ meetings: initial, operators }: 
   return (
     <>
       {meetings.length === 0 && !dialog.meeting ? (
-        <div className="rounded-2xl border border-[#E5E1DA] bg-white px-4 py-12 text-center">
+        <div className="iuna-card px-4 py-12 text-center">
           <p className="text-sm text-slate-400">승인대기 중인 모임이 없습니다.</p>
         </div>
       ) : (
-        <div className="rounded-2xl border border-[#E5E1DA] bg-white overflow-hidden">
+        <div className="iuna-card overflow-hidden">
           {meetings.map((m) => (
             <div key={m.id} className="border-b border-[#E5E1DA] last:border-b-0 px-4 py-4">
               <div className="flex items-start justify-between gap-3">
@@ -119,7 +119,7 @@ export default function MeetingApprovalClient({ meetings: initial, operators }: 
                   </Link>
                   <button
                     onClick={() => openApprove(m)}
-                    className="rounded-lg bg-[#111111] px-2.5 py-1.5 text-xs font-medium text-white hover:bg-slate-900 transition"
+                    className="rounded-lg bg-[var(--iuna-navy)] px-2.5 py-1.5 text-xs font-bold text-white transition hover:bg-[var(--iuna-navy-2)]"
                   >
                     승인
                   </button>
@@ -139,7 +139,7 @@ export default function MeetingApprovalClient({ meetings: initial, operators }: 
       {/* Dialog */}
       {dialog.meeting && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="w-full max-w-md rounded-2xl bg-white border border-[#E5E1DA] p-6 shadow-xl">
+          <div className="iuna-dialog max-w-md">
             {dialog.status === 'success' ? (
               <>
                 <h2 className="text-lg font-semibold text-emerald-700">{dialog.message}</h2>

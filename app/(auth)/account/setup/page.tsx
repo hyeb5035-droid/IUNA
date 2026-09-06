@@ -85,23 +85,23 @@ export default function AccountSetupPage() {
   if (loading) return <main className="min-h-screen bg-[#F5F4F1] p-8">계정 상태를 확인하고 있습니다.</main>
 
   return (
-    <main className="min-h-screen bg-[#F5F4F1] px-6 py-12 text-[#111]">
-      <div className="mx-auto max-w-xl rounded-3xl border border-[#DDDCD7] bg-white p-8 shadow-sm">
-        <h1 className="text-3xl font-semibold">계정 보안 설정</h1>
+    <main className="iuna-page">
+      <div className="iuna-card-emphasis mx-auto max-w-xl p-6 sm:p-8">
+        <h1 className="iuna-page-title">계정 보안 설정</h1>
         <p className="mt-3 text-sm text-slate-600">기존 회원 정보 이관 후 최초 1회 필요한 절차입니다.</p>
         {emailPending ? (
           <form className="mt-8 space-y-3" onSubmit={submitEmail}>
             <h2 className="text-lg font-semibold">이메일 등록 및 인증</h2>
-            <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="name@example.com" className="w-full rounded-2xl border border-[#DDDCD7] px-4 py-3" />
-            <button className="w-full rounded-2xl bg-black px-5 py-3 font-semibold text-white">인증 메일 보내기</button>
+            <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="name@example.com" className="iuna-field" />
+            <button className="iuna-primary w-full">인증 메일 보내기</button>
           </form>
         ) : null}
         {passwordPending ? (
           <form className="mt-8 space-y-3" onSubmit={submitPassword}>
             <h2 className="text-lg font-semibold">초기 비밀번호 변경</h2>
-            <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="새 비밀번호 (8자 이상)" className="w-full rounded-2xl border border-[#DDDCD7] px-4 py-3" />
-            <input type="password" value={passwordConfirm} onChange={(event) => setPasswordConfirm(event.target.value)} placeholder="새 비밀번호 확인" className="w-full rounded-2xl border border-[#DDDCD7] px-4 py-3" />
-            <button className="w-full rounded-2xl bg-black px-5 py-3 font-semibold text-white">비밀번호 변경</button>
+            <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="새 비밀번호 (8자 이상)" className="iuna-field" />
+            <input type="password" value={passwordConfirm} onChange={(event) => setPasswordConfirm(event.target.value)} placeholder="새 비밀번호 확인" className="iuna-field" />
+            <button className="iuna-primary w-full">비밀번호 변경</button>
           </form>
         ) : null}
         {message ? <p className="mt-5 text-sm text-slate-700">{message}</p> : null}

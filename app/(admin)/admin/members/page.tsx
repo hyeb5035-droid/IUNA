@@ -43,10 +43,11 @@ export default async function AdminMembersPage() {
   const members = mapDirectoryRows(data)
 
   return (
-    <main className="min-h-screen bg-[#F7F6F2] px-4 py-8 text-[#111111] sm:px-6">
-      <div className="mx-auto max-w-5xl space-y-4">
+    <main className="iuna-page">
+      <div className="iuna-container space-y-5">
         <div>
-          <h1 className="text-xl font-semibold">회원 관리</h1>
+          <p className="iuna-eyebrow">관리 · 회원</p>
+          <h1 className="iuna-page-title mt-1">회원 관리</h1>
           <p className="mt-0.5 text-xs text-slate-500">총 {members.length}명</p>
         </div>
         {error ? (

@@ -82,19 +82,19 @@ export default async function MeetingsPage() {
   }))
 
   return (
-    <main className="min-h-screen bg-[#F7F6F2] px-4 py-8 text-[#111111] sm:px-6">
-      <div className="mx-auto max-w-3xl space-y-4">
+    <main className="iuna-page">
+      <div className="iuna-container space-y-6">
 
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-semibold">모임</h1>
-            <p className="text-xs text-slate-500 mt-0.5">{meetings.length}개의 모임</p>
+            <p className="iuna-eyebrow">{meetings.length}개의 모임</p>
+            <h1 className="iuna-page-title mt-1">모임</h1>
           </div>
           {canCreate && (
             <Link
               href="/meetings/new"
-              className="rounded-xl bg-[#111111] px-4 py-2 text-sm font-medium text-white hover:bg-slate-900 transition"
+              className="iuna-primary"
             >
               모임 개설
             </Link>

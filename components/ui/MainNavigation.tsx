@@ -53,7 +53,7 @@ export default function MainNavigation({ isOperator = false }: MainNavigationPro
   )
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#E5E1DA] bg-white lg:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-[var(--iuna-line)] bg-white/95 backdrop-blur lg:hidden">
       <div className="flex items-center justify-around px-2 py-2 pb-safe">
         {filteredItems.map((item) => {
           const isActive = pathname === item.href || 
@@ -63,13 +63,13 @@ export default function MainNavigation({ isOperator = false }: MainNavigationPro
             <Link
               key={item.href}
               href={item.href}
-              className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition ${
+              className={`flex min-h-12 min-w-14 flex-col items-center gap-1 rounded-xl px-3 py-2 transition ${
                 isActive
-                  ? 'text-[#111111] font-semibold'
+                  ? 'text-[var(--iuna-navy)] font-bold'
                   : 'text-slate-400 hover:text-slate-600'
               }`}
             >
-              <span className={isActive ? 'text-[#111111]' : 'text-slate-400'}>
+              <span className={isActive ? 'text-[var(--iuna-navy)]' : 'text-slate-400'}>
                 {iconMap[item.icon]}
               </span>
               <span className="text-[11px]">{item.label}</span>

@@ -103,17 +103,17 @@ export default async function AdminDashboard() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F7F6F2] px-4 py-8 text-[#111111] sm:px-6">
-      <div className="mx-auto max-w-3xl space-y-5">
+    <main className="iuna-page">
+      <div className="iuna-container space-y-6">
 
         {/* Header */}
         <div>
-          <p className="text-xs text-slate-500">{roleLabel}</p>
-          <h1 className="text-xl font-semibold">운영 대시보드</h1>
+          <p className="iuna-eyebrow">{roleLabel}</p>
+          <h1 className="iuna-page-title mt-1">관리 홈</h1>
         </div>
 
         {/* Permission summary */}
-        <section className="rounded-2xl border border-[#E5E1DA] bg-white">
+        <section className="iuna-card overflow-hidden">
           <div className="border-b border-[#E5E1DA] px-4 py-3">
             <h2 className="text-sm font-semibold">내 관리 권한</h2>
           </div>
@@ -127,7 +127,7 @@ export default async function AdminDashboard() {
 
         {/* Metrics */}
         {canManageMembers && (
-          <section className="rounded-2xl border border-[#E5E1DA] bg-white px-4 py-4">
+          <section className="iuna-card-emphasis px-5 py-5">
             <h2 className="text-xs text-slate-400 mb-2">회원 현황</h2>
             <div className="grid grid-cols-4 gap-2 text-center">
               <div><p className="text-lg font-bold">{totalMembersCount ?? '-'}</p><p className="text-[11px] text-slate-500">총 회원</p></div>
@@ -139,7 +139,7 @@ export default async function AdminDashboard() {
         )}
 
         {canManageMeetings && (
-          <section className="rounded-2xl border border-[#E5E1DA] bg-white px-4 py-4">
+          <section className="iuna-card-emphasis px-5 py-5">
             <h2 className="text-xs text-slate-400 mb-2">모임 현황</h2>
             <div className="grid grid-cols-3 gap-2 text-center">
               <div><p className="text-lg font-bold">{pendingCount}</p><p className="text-[11px] text-slate-500">승인대기</p></div>
@@ -177,12 +177,12 @@ export default async function AdminDashboard() {
         {/* Shortcuts */}
         <section className="space-y-2">
           <h2 className="text-xs text-slate-400">바로가기</h2>
-          <div className="grid grid-cols-2 gap-2">
-            <Link href="/admin/members" className="rounded-2xl border border-[#E5E1DA] bg-white px-4 py-3 text-sm font-medium hover:bg-[#F5F4F1] transition">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Link href="/admin/members" className="iuna-card-emphasis min-h-28 p-5 text-sm font-bold transition hover:border-[var(--iuna-navy-2)]">
               회원 조회 →
             </Link>
             {canManageMeetings && (
-              <Link href="/admin/meetings" className="rounded-2xl border border-[#E5E1DA] bg-white px-4 py-3 text-sm font-medium hover:bg-[#F5F4F1] transition">
+              <Link href="/admin/meetings" className="iuna-card-emphasis min-h-28 p-5 text-sm font-bold transition hover:border-[var(--iuna-navy-2)]">
                 모임 승인 →
               </Link>
             )}

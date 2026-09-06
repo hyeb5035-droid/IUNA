@@ -24,8 +24,8 @@ export default function PageHeader({
     : '/home'
 
   return (
-    <header className="sticky top-0 z-30 bg-[#F7F6F2]/95 backdrop-blur-sm border-b border-[#E5E1DA]">
-      <div className="flex items-center justify-between h-14 px-4">
+    <header className="sticky top-0 z-30 border-b border-[var(--iuna-line)] bg-[var(--iuna-warm)]/95 backdrop-blur-sm">
+      <div className="mx-auto flex h-14 max-w-[1180px] items-center justify-between px-4 sm:px-7">
         <div className="flex items-center gap-2">
           {showBack && (
             backHref ? (

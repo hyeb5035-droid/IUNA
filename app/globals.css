@@ -1,13 +1,68 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
+  --iuna-navy: #073b60;
+  --iuna-navy-2: #245a7c;
+  --iuna-navy-100: #eaf1f5;
+  --iuna-warm: #f8f7f3;
+  --iuna-surface: #ffffff;
+  --iuna-ink: #17191c;
+  --iuna-muted: #66727c;
+  --iuna-line: #e2e3df;
+  --iuna-success: #16a34a;
+  --iuna-success-bg: #eaf8ef;
+  --iuna-info: #3b82f6;
+  --iuna-info-bg: #edf4ff;
+  --iuna-warning: #c77b00;
+  --iuna-warning-bg: #fff4da;
+  --iuna-danger: #ef4444;
+  --iuna-danger-bg: #fdecec;
 }
 
+* { box-sizing: border-box; }
+html { background: var(--iuna-warm); }
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #0f172a;
-  color: #f8fafc;
+  font-family: Pretendard, "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: -0.02em;
+  background: var(--iuna-warm);
+  color: var(--iuna-ink);
+  text-rendering: optimizeLegibility;
+}
+button, input, textarea, select { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+input, textarea, select { color: var(--iuna-ink); }
+input::placeholder, textarea::placeholder { color: #9aa3aa; }
+::selection { background: var(--iuna-navy-100); color: var(--iuna-navy); }
+
+@layer components {
+  .iuna-page { @apply min-h-screen px-4 py-8 sm:px-7 sm:py-10; background: var(--iuna-warm); color: var(--iuna-ink); }
+  .iuna-container { @apply mx-auto w-full max-w-[1180px]; }
+  .iuna-content { @apply mx-auto w-full max-w-[760px]; }
+  .iuna-card { @apply rounded-2xl border bg-white; border-color: var(--iuna-line); }
+  .iuna-card-emphasis { @apply rounded-2xl border bg-white; border-color: var(--iuna-line); box-shadow: 0 8px 24px rgba(7,59,96,.05); }
+  .iuna-page-title { @apply text-[28px] leading-tight font-bold sm:text-[30px]; color: var(--iuna-ink); }
+  .iuna-section-title { @apply text-[19px] leading-snug font-bold; color: var(--iuna-ink); }
+  .iuna-eyebrow { @apply text-xs font-semibold tracking-[.08em] uppercase; color: var(--iuna-navy-2); }
+  .iuna-muted { color: var(--iuna-muted); }
+  .iuna-primary { @apply inline-flex min-h-11 items-center justify-center rounded-[10px] px-4 py-2.5 text-sm font-bold text-white transition disabled:cursor-not-allowed disabled:opacity-50; background: var(--iuna-navy); }
+  .iuna-primary:hover { background: var(--iuna-navy-2); }
+  .iuna-secondary { @apply inline-flex min-h-11 items-center justify-center rounded-[10px] border bg-white px-4 py-2.5 text-sm font-semibold transition; border-color: var(--iuna-line); color: var(--iuna-ink); }
+  .iuna-secondary:hover { background: var(--iuna-warm); border-color: #cbd2d6; }
+  .iuna-danger { @apply inline-flex min-h-11 items-center justify-center rounded-[10px] border px-4 py-2.5 text-sm font-semibold transition; border-color: #f5b9b9; background: var(--iuna-danger-bg); color: var(--iuna-danger); }
+  .iuna-field { @apply w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition; border-color: var(--iuna-line); color: var(--iuna-ink); }
+  .iuna-field:focus { border-color: var(--iuna-navy-2); box-shadow: 0 0 0 3px rgba(36,90,124,.1); }
+  .iuna-badge { @apply inline-flex items-center rounded-full px-2.5 py-1 text-[11px] leading-none font-bold; background: #f1f2f0; color: #656a6d; }
+  .iuna-badge-success { background: var(--iuna-success-bg); color: var(--iuna-success); }
+  .iuna-badge-info { background: var(--iuna-info-bg); color: var(--iuna-info); }
+  .iuna-badge-warning { background: var(--iuna-warning-bg); color: var(--iuna-warning); }
+  .iuna-badge-danger { background: var(--iuna-danger-bg); color: var(--iuna-danger); }
+  .iuna-table-wrap { @apply overflow-x-auto rounded-2xl border bg-white; border-color: var(--iuna-line); }
+  .iuna-dialog { @apply max-h-[calc(100dvh-2rem)] w-full overflow-y-auto rounded-2xl border bg-white p-5 sm:p-6; border-color: var(--iuna-line); box-shadow: 0 20px 60px rgba(7,59,96,.18); }
+}
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe { padding-bottom: calc(.5rem + env(safe-area-inset-bottom)); }
 }

@@ -73,8 +73,8 @@ export default function MeetingsListClient({ meetings }: { meetings: MeetingList
             onClick={() => setStatusFilter(f.value)}
             className={`rounded-full px-3 py-1.5 text-xs font-medium transition ${
               statusFilter === f.value
-                ? 'bg-[#111111] text-white'
-                : 'border border-[#E5E1DA] bg-white text-slate-600 hover:bg-[#F5F4F1]'
+                ? 'bg-[var(--iuna-navy)] text-white'
+                : 'border border-[var(--iuna-line)] bg-white text-[var(--iuna-muted)] hover:bg-[var(--iuna-warm)]'
             }`}
           >
             {f.label}
@@ -90,8 +90,8 @@ export default function MeetingsListClient({ meetings }: { meetings: MeetingList
             onClick={() => setTypeFilter(f.value)}
             className={`rounded-full px-3 py-1.5 text-xs font-medium transition ${
               typeFilter === f.value
-                ? 'bg-[#111111] text-white'
-                : 'border border-[#E5E1DA] bg-white text-slate-600 hover:bg-[#F5F4F1]'
+                ? 'bg-[var(--iuna-navy)] text-white'
+                : 'border border-[var(--iuna-line)] bg-white text-[var(--iuna-muted)] hover:bg-[var(--iuna-warm)]'
             }`}
           >
             {f.label}
@@ -105,16 +105,16 @@ export default function MeetingsListClient({ meetings }: { meetings: MeetingList
           <p className="text-sm text-slate-400">조건에 맞는 모임이 없습니다.</p>
         </div>
       ) : (
-        <div className="border-t border-b border-[#E5E1DA] bg-white">
+        <div className="iuna-card overflow-hidden">
           {filtered.map((m) => (
             <Link
               key={m.id}
               href={`/meetings/${m.id}`}
-              className="flex items-center gap-3 border-b border-[#E5E1DA] px-4 py-3 last:border-b-0 transition hover:bg-[#F5F4F1]"
+              className="flex items-center gap-3 border-b border-[var(--iuna-line)] px-4 py-4 last:border-b-0 transition hover:bg-[var(--iuna-warm)]"
             >
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5 mb-0.5">
-                  <span className="rounded-full bg-[#F5F4F1] px-2 py-0.5 text-[11px] shrink-0">
+                  <span className="iuna-badge shrink-0">
                     {TYPE_LABEL[m.meeting_type] ?? m.meeting_type}
                   </span>
                   <span className={`rounded-full border px-2 py-0.5 text-[11px] font-medium ${STATUS_COLOR[m.status] ?? 'bg-slate-100 text-slate-500 border-slate-200'}`}>

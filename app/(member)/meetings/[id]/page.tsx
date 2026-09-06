@@ -133,13 +133,13 @@ export default async function MeetingDetailPage({ params }: { params: Promise<{ 
   const isLecture = meeting.meeting_type === 'lecture'
 
   return (
-    <main className="min-h-screen bg-[#F7F6F2] px-4 py-8 text-[#111111] sm:px-6">
-      <div className="mx-auto max-w-2xl space-y-4">
+    <main className="iuna-page">
+      <div className="iuna-content space-y-4 pb-20 lg:pb-4">
 
         {/* Header: type + status + title */}
-        <section className="rounded-2xl border border-[#E5E1DA] bg-white px-5 py-5">
+        <section className="iuna-card-emphasis px-5 py-6 sm:px-7">
           <div className="flex items-center gap-2 mb-2">
-            <span className="rounded-full bg-[#F5F4F1] px-2 py-0.5 text-xs">
+            <span className="iuna-badge">
               {TYPE_LABEL[meeting.meeting_type ?? ''] ?? meeting.meeting_type}
             </span>
             <span className={`rounded-full border px-2 py-0.5 text-xs font-medium ${STATUS_COLOR[meeting.status] ?? 'bg-slate-100 text-slate-500 border-slate-200'}`}>
@@ -151,20 +151,20 @@ export default async function MeetingDetailPage({ params }: { params: Promise<{ 
               </span>
             )}
           </div>
-          <h1 className="text-xl font-semibold">{meeting.title}</h1>
+          <h1 className="iuna-page-title mt-3">{meeting.title}</h1>
 
           {/* Key info */}
-          <div className="mt-3 space-y-1 text-sm text-slate-600">
+          <div className="mt-5 grid gap-3 text-sm text-[var(--iuna-muted)] sm:grid-cols-2">
             {(meeting.period_start || meeting.period_end) && (
-              <p>◷ {formatDate(meeting.period_start)}{meeting.period_end ? ` ~ ${formatDate(meeting.period_end)}` : ''}</p>
+              <p className="rounded-xl bg-[var(--iuna-warm)] p-3"><span className="block text-[11px]">기간</span><strong className="text-[var(--iuna-ink)]">{formatDate(meeting.period_start)}{meeting.period_end ? ` ~ ${formatDate(meeting.period_end)}` : ''}</strong></p>
             )}
-            {meeting.capacity && <p>◎ 정원 {meeting.capacity}명</p>}
+            {meeting.capacity && <p className="rounded-xl bg-[var(--iuna-warm)] p-3"><span className="block text-[11px]">정원</span><strong className="text-[var(--iuna-ink)]">{meeting.capacity}명</strong></p>}
           </div>
         </section>
 
         {/* Creator */}
         {creatorProfile && (
-          <section className="rounded-2xl border border-[#E5E1DA] bg-white px-5 py-4">
+          <section className="iuna-card px-5 py-4">
             <p className="text-xs text-slate-400 mb-2">개설자</p>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-[#DDDCD7] shrink-0" />
@@ -181,7 +181,7 @@ export default async function MeetingDetailPage({ params }: { params: Promise<{ 
         )}
 
         {/* Content sections */}
-        <section className="rounded-2xl border border-[#E5E1DA] bg-white">
+        <section className="iuna-card overflow-hidden">
           {meeting.description && (
             <div className="border-b border-[#E5E1DA] px-5 py-4">
               <h3 className="text-xs text-slate-400 mb-1">모임 소개</h3>
@@ -248,7 +248,7 @@ export default async function MeetingDetailPage({ params }: { params: Promise<{ 
 
         {/* Participants */}
         {((participants ?? []).length > 0 || (isCreator && pendingApplicants.length > 0)) && (
-          <section className="rounded-2xl border border-[#E5E1DA] bg-white">
+          <section className="iuna-card overflow-hidden">
             <div className="border-b border-[#E5E1DA] px-5 py-3">
               <h3 className="text-sm font-semibold">참여자 ({(participants ?? []).length}명)</h3>
             </div>

@@ -14,7 +14,7 @@ export default function AppShell({ children, hideNavigation = false }: AppShellP
   const { isOperator, canManageMembers, canManageMeetings } = useAuthContext()
 
   return (
-    <div className="min-h-screen bg-[#F7F6F2]">
+    <div className="min-h-screen bg-[var(--iuna-warm)] text-[var(--iuna-ink)]">
       {/* Desktop Sidebar */}
       <DesktopSidebar
         isOperator={isOperator}
@@ -23,7 +23,7 @@ export default function AppShell({ children, hideNavigation = false }: AppShellP
       />
 
       {/* Main Content Area */}
-      <div className="lg:pl-56">
+      <div className="lg:pl-[230px]">
         {/* Content */}
         <main className={`min-h-screen ${hideNavigation ? '' : 'pb-20 lg:pb-0'}`}>
           {children}

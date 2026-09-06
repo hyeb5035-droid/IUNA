@@ -116,9 +116,10 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F5F4F1] px-6 py-16 text-[#111111]">
-      <div className="mx-auto max-w-xl rounded-3xl bg-white border border-[#DDDCD7] p-10 shadow-sm">
-        <h1 className="text-3xl font-semibold">로그인</h1>
+    <main className="iuna-page flex items-center justify-center">
+      <div className="iuna-card-emphasis w-full max-w-xl p-6 sm:p-10">
+        <p className="iuna-eyebrow">IUNA COMMUNITY PLATFORM</p>
+        <h1 className="iuna-page-title mt-2">로그인</h1>
         <p className="mt-3 text-slate-600">IUNA 계정으로 로그인하세요.</p>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -153,7 +154,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={!canSubmit}
-            className="inline-flex w-full items-center justify-center rounded-2xl bg-[#0A0A0A] px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
+            className="iuna-primary w-full"
           >
             {isSubmitting ? '로그인 중...' : '로그인'}
           </button>

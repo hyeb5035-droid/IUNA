@@ -121,9 +121,9 @@ export default function ProfileEditPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F5F4F1] px-4 py-12 text-[#111111] sm:px-6">
-      <div className="mx-auto max-w-xl rounded-3xl bg-white border border-[#DDDCD7] p-8 shadow-sm">
-        <h1 className="text-2xl font-semibold mb-8">프로필 수정</h1>
+    <main className="iuna-page">
+      <div className="iuna-card-emphasis mx-auto max-w-xl p-6 sm:p-8">
+        <h1 className="iuna-page-title mb-8">프로필 수정</h1>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
@@ -177,7 +177,7 @@ export default function ProfileEditPage() {
             <button
               type="submit"
               disabled={isSaving}
-              className="flex-1 rounded-2xl bg-[#0A0A0A] px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
+              className="iuna-primary flex-1"
             >
               {isSaving ? '저장 중...' : '저장'}
             </button>

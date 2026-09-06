@@ -195,13 +195,13 @@ export default function MeetingNewPage() {
     : MEETING_TYPES.filter((t) => t.value !== 'regular_networking')
 
   return (
-    <main className="min-h-screen bg-[#F7F6F2] px-4 py-8 text-[#111111] sm:px-6">
-      <div className="mx-auto max-w-xl space-y-4">
+    <main className="iuna-page">
+      <div className="iuna-content space-y-6">
 
         {/* Header */}
         <div>
-          <p className="text-xs text-slate-500">새로운 활동 만들기</p>
-          <h1 className="text-xl font-semibold">모임 개설</h1>
+          <p className="iuna-eyebrow">새로운 활동 만들기</p>
+          <h1 className="iuna-page-title mt-1">모임 개설</h1>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -217,7 +217,7 @@ export default function MeetingNewPage() {
                   onClick={() => updateField('meeting_type', t.value)}
                   className={`rounded-xl px-4 py-2 text-sm font-medium border transition ${
                     form.meeting_type === t.value
-                      ? 'border-[#111111] bg-[#111111] text-white'
+                      ? 'border-[var(--iuna-navy)] bg-[var(--iuna-navy)] text-white'
                       : 'border-[#E5E1DA] bg-white text-slate-600 hover:bg-[#F5F4F1]'
                   }`}
                 >
@@ -375,7 +375,7 @@ export default function MeetingNewPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 rounded-xl bg-[#111111] px-5 py-3 text-sm font-semibold text-white hover:bg-slate-900 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="iuna-primary flex-1"
             >
               {isSubmitting ? '생성 중...' : '승인 요청'}
             </button>

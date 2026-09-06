@@ -75,12 +75,13 @@ export default function DesktopSidebar({
   }
 
   return (
-    <aside className="hidden lg:flex lg:flex-col lg:w-56 lg:fixed lg:inset-y-0 lg:left-0 lg:z-40">
-      <div className="flex flex-col h-full bg-white border-r border-[#E5E1DA]">
+    <aside className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 lg:flex lg:w-[230px] lg:flex-col">
+      <div className="flex h-full flex-col border-r border-[var(--iuna-line)] bg-white">
         {/* Brand */}
         <div className="px-5 py-6">
-          <Link href="/home" className="text-xl font-black tracking-widest text-[#111111]">
-            IUNA
+          <Link href="/home" className="flex items-center gap-3 text-[var(--iuna-navy)]">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--iuna-navy)] text-lg font-bold text-white">I</span>
+            <span><strong className="block text-xl tracking-[.16em]">IUNA</strong><span className="block text-[9px] font-semibold tracking-[.12em] text-[var(--iuna-muted)]">COMMUNITY PLATFORM</span></span>
           </Link>
         </div>
 
@@ -100,8 +101,8 @@ export default function DesktopSidebar({
                       href={item.href}
                       className={`block px-3 py-2.5 rounded-xl text-sm font-semibold transition ${
                         isActive(item.activePattern)
-                          ? 'bg-[#111111] text-white'
-                          : 'text-slate-500 hover:bg-[#F5F4F1] hover:text-[#111111]'
+                          ? 'bg-[var(--iuna-navy-100)] text-[var(--iuna-navy)]'
+                          : 'text-[var(--iuna-muted)] hover:bg-[var(--iuna-warm)] hover:text-[var(--iuna-navy)]'
                       }`}
                     >
                       {item.label}

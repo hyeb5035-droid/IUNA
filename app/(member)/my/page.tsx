@@ -139,16 +139,28 @@ export default async function MemberMyPage() {
   const interests: string[] = Array.isArray(profile.interests) ? profile.interests : []
 
   return (
-    <main className="min-h-screen bg-[#F7F6F2] px-4 py-8 text-[#111111] sm:px-6">
-      <div className="mx-auto max-w-2xl space-y-4">
+    <main className="iuna-page">
+      <div className="iuna-content space-y-5">
 
         {/* Header */}
-        <div className="rounded-2xl bg-white border border-[#DDDCD7] p-5 shadow-sm">
-          <h1 className="text-xl font-semibold">마이페이지</h1>
+        <div>
+          <p className="iuna-eyebrow">내 계정</p>
+          <h1 className="iuna-page-title mt-1">마이페이지</h1>
         </div>
 
+        <section className="iuna-card-emphasis flex items-center gap-4 p-5 sm:p-6">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--iuna-navy-100)] text-xl font-bold text-[var(--iuna-navy)]">
+            {(priv?.legal_name ?? profile.member_no).slice(0, 1)}
+          </div>
+          <div className="min-w-0">
+            <h2 className="truncate text-xl font-bold">{priv?.legal_name ?? '회원'}</h2>
+            <p className="mt-1 text-sm text-[var(--iuna-muted)]">{GRADE_LABEL[membership.grade] ?? membership.grade} · 회원번호 {profile.member_no}</p>
+          </div>
+          <div className="ml-auto"><StatusBadge status={membership.status} /></div>
+        </section>
+
         {/* 1. 회원 기본 정보 */}
-        <section className="rounded-2xl border border-[#DDDCD7] bg-white">
+        <section className="iuna-card overflow-hidden">
           <div className="border-b border-[#E5E1DA] px-4 py-3">
             <h2 className="text-sm font-semibold">회원 기본 정보</h2>
           </div>
@@ -187,7 +199,7 @@ export default async function MemberMyPage() {
         </section>
 
         {/* 2. 프로필 */}
-        <section className="rounded-2xl border border-[#DDDCD7] bg-white">
+        <section className="iuna-card overflow-hidden">
           <div className="flex items-center justify-between border-b border-[#E5E1DA] px-4 py-3">
             <h2 className="text-sm font-semibold">프로필</h2>
             <a href="/my/edit" className="text-xs text-slate-500 hover:text-[#111111]">
@@ -215,7 +227,7 @@ export default async function MemberMyPage() {
         </section>
 
         {/* 3. 내가 개설한 모임 */}
-        <section className="rounded-2xl border border-[#DDDCD7] bg-white">
+        <section className="iuna-card overflow-hidden">
           <div className="border-b border-[#E5E1DA] px-4 py-3">
             <h2 className="text-sm font-semibold">내가 개설한 모임</h2>
           </div>
@@ -231,7 +243,7 @@ export default async function MemberMyPage() {
         </section>
 
         {/* 4. 신청/참여 모임 */}
-        <section className="rounded-2xl border border-[#DDDCD7] bg-white">
+        <section className="iuna-card overflow-hidden">
           <div className="border-b border-[#E5E1DA] px-4 py-3">
             <h2 className="text-sm font-semibold">신청/참여 모임</h2>
           </div>
@@ -270,7 +282,7 @@ export default async function MemberMyPage() {
         </section>
 
         {/* 5. 회원번호 이력 */}
-        <section className="rounded-2xl border border-[#DDDCD7] bg-white">
+        <section className="iuna-card overflow-hidden">
           <div className="border-b border-[#E5E1DA] px-4 py-3">
             <h2 className="text-sm font-semibold">회원번호 이력</h2>
           </div>
@@ -302,7 +314,7 @@ export default async function MemberMyPage() {
 
         <a
           href="/account/password"
-          className="flex w-full items-center justify-center rounded-2xl border border-[#DDDCD7] bg-white px-4 py-3 text-sm font-medium transition hover:bg-[#F5F4F1]"
+          className="iuna-secondary w-full"
         >
           비밀번호 변경
         </a>
@@ -310,7 +322,7 @@ export default async function MemberMyPage() {
         {/* 6. 로그아웃 */}
         <a
           href="/auth/logout"
-          className="flex w-full items-center justify-center rounded-2xl border border-[#DDDCD7] bg-white px-4 py-3 text-sm font-medium text-slate-500 transition hover:bg-[#F5F4F1]"
+          className="iuna-secondary w-full text-[var(--iuna-muted)]"
         >
           로그아웃
         </a>

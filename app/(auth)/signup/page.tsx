@@ -193,9 +193,10 @@ export default function SignupPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#F5F4F1] px-6 py-16 text-[#111111]">
-      <div className="mx-auto max-w-xl rounded-3xl bg-white border border-[#DDDCD7] p-6 shadow-sm sm:p-10">
-        <h1 className="text-3xl font-semibold">회원가입</h1>
+    <main className="iuna-page">
+      <div className="iuna-card-emphasis mx-auto max-w-xl p-6 sm:p-10">
+        <p className="iuna-eyebrow">IUNA COMMUNITY PLATFORM</p>
+        <h1 className="iuna-page-title mt-2">회원가입</h1>
         <p className="mt-3 text-slate-600">IUNA 계정으로 가입하시려면 아래 정보를 입력해주세요.</p>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -354,7 +355,7 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={!canSubmit}
-            className="inline-flex w-full items-center justify-center rounded-2xl bg-[#0A0A0A] px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
+            className="iuna-primary w-full"
           >
             {isSubmitting ? '가입 중...' : '가입하기'}
           </button>

@@ -135,9 +135,9 @@ export default function MemberListClient({ members: initial, canManageMembers, i
 
   return (
     <>
-      <section className="overflow-hidden rounded-2xl border border-[#E5E1DA] bg-white">
+      <section className="iuna-table-wrap">
         <div className="border-b border-[#DDDCD7] p-5">
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="회원번호 또는 이름 검색" className="w-full rounded-2xl border border-[#DDDCD7] bg-[#F5F4F1] px-4 py-2.5 text-sm outline-none" />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="회원번호 또는 이름 검색" className="iuna-field bg-[var(--iuna-warm)]" />
         </div>
         <div className="divide-y divide-[#DDDCD7]">
           {filtered.map((member) => (
@@ -150,7 +150,7 @@ export default function MemberListClient({ members: initial, canManageMembers, i
                 </div>
                 {member.activeRoles.length > 0 && (
                   <div className="mt-2 flex flex-wrap gap-1">
-                    {member.activeRoles.map((role) => <span key={role.code} className="rounded-full bg-slate-900 px-2.5 py-1 text-xs text-white">{ROLES.find((item) => item.code === role.code)?.label ?? role.name}</span>)}
+                    {member.activeRoles.map((role) => <span key={role.code} className="iuna-badge bg-[var(--iuna-navy)] text-white">{ROLES.find((item) => item.code === role.code)?.label ?? role.name}</span>)}
                   </div>
                 )}
                 {member.points !== null && <p className="mt-2 text-xs text-slate-500">포인트 {member.points}점 {member.points >= 5 ? '· 승급 대상' : ''}</p>}
@@ -172,7 +172,7 @@ export default function MemberListClient({ members: initial, canManageMembers, i
 
       {roleTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="w-full max-w-md rounded-3xl bg-white p-7 shadow-xl">
+          <div className="iuna-dialog max-w-md">
             <h2 className="text-lg font-semibold">{roleTarget.isOperator ? '역할 관리' : '운영진 지정'}</h2>
             <p className="mt-1 text-sm text-slate-500">{value(roleTarget.legal_name)} · 선택된 역할이 현재 적용될 역할입니다.</p>
             <div className="mt-5 space-y-2">
@@ -194,7 +194,7 @@ export default function MemberListClient({ members: initial, canManageMembers, i
 
       {(detailStatus !== 'idle' || detail) && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 py-6">
-          <div className="max-h-full w-full max-w-2xl overflow-y-auto rounded-3xl bg-white p-6 shadow-xl sm:p-8">
+          <div className="iuna-dialog max-w-2xl sm:p-8">
             {detailStatus === 'loading' && <p className="text-sm text-slate-500">회원 정보를 불러오는 중입니다.</p>}
             {detailStatus === 'error' && <p className="text-sm text-red-600">{roleMessage}</p>}
             {detail && <MemberDetailView member={detail} />}
@@ -205,7 +205,7 @@ export default function MemberListClient({ members: initial, canManageMembers, i
 
       {promoteTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="w-full max-w-md rounded-3xl bg-white p-7 shadow-xl">
+          <div className="iuna-dialog max-w-md">
             <h2 className="text-lg font-semibold">정회원 승급</h2>
             <p className="mt-1 text-sm text-slate-500">{value(promoteTarget.legal_name)}</p>
             <input value={promoteReason} onChange={(event) => setPromoteReason(event.target.value)} placeholder="승급 사유" className="mt-5 w-full rounded-xl border p-3 text-sm" />
@@ -231,7 +231,7 @@ function MemberDetailView({ member }: { member: MemberDetail }) {
     <h2 className="text-xl font-semibold">회원 상세 정보</h2>
     <dl className="mt-5 grid gap-3 sm:grid-cols-2">{rows.map(([label, content]) => <div key={label} className="rounded-xl bg-[#F5F4F1] p-3"><dt className="text-xs text-slate-500">{label}</dt><dd className="mt-1 break-words text-sm">{content}</dd></div>)}</dl>
     <div className="mt-4 rounded-xl bg-[#F5F4F1] p-3"><p className="text-xs text-slate-500">자기소개</p><p className="mt-1 whitespace-pre-wrap text-sm">{value(member.introduction)}</p></div>
-    <div className="mt-4"><p className="text-xs text-slate-500">현재 운영진 역할</p><div className="mt-2 flex flex-wrap gap-1">{member.active_roles.length ? member.active_roles.map((role) => <span key={role.code} className="rounded-full bg-slate-900 px-2.5 py-1 text-xs text-white">{ROLES.find((item) => item.code === role.code)?.label ?? role.name}</span>) : <span className="text-sm">등록된 정보가 없습니다.</span>}</div></div>
+    <div className="mt-4"><p className="text-xs text-slate-500">현재 운영진 역할</p><div className="mt-2 flex flex-wrap gap-1">{member.active_roles.length ? member.active_roles.map((role) => <span key={role.code} className="iuna-badge bg-[var(--iuna-navy)] text-white">{ROLES.find((item) => item.code === role.code)?.label ?? role.name}</span>) : <span className="text-sm">등록된 정보가 없습니다.</span>}</div></div>
     <div className="mt-4"><p className="text-xs text-slate-500">회원번호 이력</p><div className="mt-2 space-y-2">{member.member_number_history.length ? member.member_number_history.map((item) => <div key={`${item.member_no}-${item.valid_from}`} className="rounded-xl border p-3 text-sm"><span className="font-mono font-semibold">{item.member_no}</span><span className="ml-2 text-xs text-slate-500">{date(item.valid_from)} ~ {item.valid_to ? date(item.valid_to) : '현재'} · {item.change_reason}</span></div>) : <p className="text-sm">등록된 정보가 없습니다.</p>}</div></div>
   </div>
 }
