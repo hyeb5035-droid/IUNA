@@ -29,9 +29,14 @@ export async function POST(request: NextRequest) {
   const action = typeof raw.action === 'string' ? raw.action : ''
   const targetUserId = typeof raw.user_id === 'string' ? raw.user_id.trim() : ''
   const roleCode = typeof raw.role_code === 'string' ? raw.role_code.trim() : ''
+  const allowedRoles = new Set(['operator', 'member_admin', 'meeting_admin', 'super_admin'])
 
   if (!action || !targetUserId || !roleCode) {
     return NextResponse.json({ error: '필수 파라미터가 누락되었습니다.' }, { status: 400 })
+  }
+
+  if (!allowedRoles.has(roleCode)) {
+    return NextResponse.json({ error: '유효하지 않은 역할 코드입니다.' }, { status: 400 })
   }
 
   if (action === 'assign') {
@@ -80,7 +85,7 @@ export async function POST(request: NextRequest) {
       } else if (code.includes('CANNOT_REVOKE_LAST_SUPER_ADMIN')) {
         userMessage = '마지막 슈퍼 관리자는 해제할 수 없습니다.'
       } else if (code.includes('ROLE_ASSIGNMENT_NOT_FOUND')) {
-        userMessage = '역할_assignmen이 존재하지 않습니다.'
+        userMessage = '활성 역할이 존재하지 않습니다.'
       }
 
       return NextResponse.json({ error: userMessage }, { status: 400 })

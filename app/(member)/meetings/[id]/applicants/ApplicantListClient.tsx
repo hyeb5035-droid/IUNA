@@ -9,14 +9,16 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
 const supabase = createBrowserClient(supabaseUrl, supabaseKey)
 
 const STATUS_LABEL: Record<string, string> = {
-  pending: '신청대기',
-  approved: '승인',
+  pending: '승인 대기',
+  payment_pending: '입금 대기',
+  approved: '참가 확정',
   rejected: '반려',
   cancelled: '취소',
 }
 
 const STATUS_COLOR: Record<string, string> = {
   pending: 'bg-yellow-50 text-yellow-700 border-yellow-200',
+  payment_pending: 'bg-blue-50 text-blue-700 border-blue-200',
   approved: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   rejected: 'bg-red-50 text-red-600 border-red-200',
   cancelled: 'bg-slate-100 text-slate-500 border-slate-200',
@@ -65,8 +67,8 @@ export default function ApplicantListClient({ applicants: initial, meetingStatus
       else if (msg.includes('MEETING_ACCESS_DENIED')) userMsg = '관리 권한이 없습니다.'
       setMessage({ type: 'error', text: userMsg })
     } else {
-      setApplicants((prev) => prev.map((a) => a.id === appId ? { ...a, status: 'approved' } : a))
-      setMessage({ type: 'success', text: '승인되었습니다.' })
+      setApplicants((prev) => prev.map((a) => a.id === appId ? { ...a, status: 'payment_pending' } : a))
+      setMessage({ type: 'success', text: '승인되었습니다. 입금 대기 상태로 변경되었습니다.' })
     }
 
     setLoadingId(null)

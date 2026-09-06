@@ -40,7 +40,7 @@ export default function PendingApplicantsClient({ applicants: initial }: Props) 
       setMessage({ type: 'error', text: msg.includes('CAPACITY_FULL') ? '정원 초과' : '승인 실패' })
     } else {
       setApplicants((prev) => prev.filter((a) => a.id !== appId))
-      setMessage({ type: 'success', text: '승인되었습니다.' })
+      setMessage({ type: 'success', text: '승인되어 입금 대기 상태로 변경되었습니다.' })
     }
     setLoadingId(null)
   }

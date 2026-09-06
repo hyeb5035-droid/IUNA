@@ -5,12 +5,7 @@ import MemberListClient from './MemberListClient'
 
 export const dynamic = 'force-dynamic'
 
-export type ActiveRole = {
-  code: string
-  name: string
-  assigned_at: string
-}
-
+export type ActiveRole = { code: string; name: string; assigned_at: string }
 export type MemberRow = {
   id: string
   member_no: string
@@ -23,113 +18,42 @@ export type MemberRow = {
   activeRoles: ActiveRole[]
 }
 
+export function mapDirectoryRows(rows: any[] | null): MemberRow[] {
+  return (rows ?? []).map((row) => ({
+    id: row.user_id,
+    member_no: row.member_no,
+    legal_name: row.legal_name ?? null,
+    grade: row.grade,
+    status: row.status,
+    created_at: row.joined_at,
+    isOperator: Array.isArray(row.active_roles) && row.active_roles.length > 0,
+    points: row.grade === 'associate' ? Number(row.total_points ?? 0) : null,
+    activeRoles: Array.isArray(row.active_roles) ? row.active_roles : [],
+  }))
+}
+
 export default async function AdminMembersPage() {
   const auth = await getCurrentMemberAuth()
-
-  if (!auth.session?.user) {
-    redirect('/login')
-  }
-
-  const canAccess =
-    auth.isSuperAdmin || auth.activeRoles.some((r) => r.code === 'member_admin')
-
-  if (!canAccess) {
-    redirect('/my')
-  }
+  if (!auth.session?.user) redirect('/login')
+  if (!auth.isOperator) redirect('/my')
 
   const supabase = await createServerSupabaseClient()
-
-  const { data, error } = await supabase
-    .from('profiles')
-    .select(
-      `id,
-       member_no,
-       created_at,
-       profile_private!inner ( legal_name ),
-       memberships!inner ( grade, status )`,
-    )
-    .is('deleted_at', null)
-    .order('created_at', { ascending: true })
-
-  // Fetch operator roles with role info
-  const { data: roleData } = await supabase
-    .from('member_roles')
-    .select('user_id, revoked_at, expires_at, roles(code, name, assigned_at)')
-    .is('revoked_at', null)
-
-  // Build roles map
-  const rolesMap = new Map<string, ActiveRole[]>()
-  for (const row of (roleData ?? []) as any[]) {
-    if (!row.expires_at || new Date(row.expires_at) > new Date()) {
-      const roleInfo = Array.isArray(row.roles) ? row.roles[0] : row.roles
-      if (roleInfo) {
-        const existing = rolesMap.get(row.user_id) || []
-        existing.push({
-          code: roleInfo.code,
-          name: roleInfo.name,
-          assigned_at: roleInfo.assigned_at,
-        })
-        rolesMap.set(row.user_id, existing)
-      }
-    }
-  }
-
-  if (error) {
-    console.error('[admin/members] query error:', error.code, error.message)
-    return (
-      <main className="min-h-screen bg-[#F7F6F2] px-4 py-8 text-[#111111] sm:px-6">
-        <div className="mx-auto max-w-4xl rounded-2xl border border-[#E5E1DA] bg-white p-6">
-          <h1 className="text-xl font-semibold">회원 관리</h1>
-          <p className="mt-3 text-red-500 text-sm">데이터를 불러오는 중 오류가 발생했습니다.</p>
-        </div>
-      </main>
-    )
-  }
-
-  const operatorUserIds = new Set(
-    (roleData ?? [])
-      .filter((r: any) => !r.expires_at || new Date(r.expires_at) > new Date())
-      .map((r: any) => r.user_id),
-  )
-
-  // Fetch associate point totals
-  const { data: pointData } = await supabase.rpc('get_associate_point_totals')
-  const pointMap = new Map<string, number>()
-  for (const row of (pointData ?? [])) {
-    pointMap.set(row.user_id, row.total_points)
-  }
-
-  const members: MemberRow[] = (data ?? []).map((row) => {
-    const priv = Array.isArray(row.profile_private)
-      ? row.profile_private[0]
-      : row.profile_private
-    const membership = Array.isArray(row.memberships)
-      ? row.memberships[0]
-      : row.memberships
-
-    return {
-      id: row.id,
-      member_no: row.member_no,
-      legal_name: priv?.legal_name ?? null,
-      grade: membership?.grade ?? '',
-      status: membership?.status ?? '',
-      created_at: row.created_at,
-      isOperator: operatorUserIds.has(row.id),
-      points: membership?.grade === 'associate' ? (pointMap.get(row.id) ?? 0) : null,
-      activeRoles: rolesMap.get(row.id) ?? [],
-    }
-  })
+  const { data, error } = await supabase.rpc('get_operator_member_directory')
+  if (error) console.error('[admin/members] directory error:', error.code, error.message)
+  const members = mapDirectoryRows(data)
 
   return (
     <main className="min-h-screen bg-[#F7F6F2] px-4 py-8 text-[#111111] sm:px-6">
-      <div className="mx-auto max-w-4xl space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-semibold">회원 관리</h1>
-            <p className="text-xs text-slate-500 mt-0.5">총 {members.length}명</p>
-          </div>
+      <div className="mx-auto max-w-5xl space-y-4">
+        <div>
+          <h1 className="text-xl font-semibold">회원 관리</h1>
+          <p className="mt-0.5 text-xs text-slate-500">총 {members.length}명</p>
         </div>
-        <MemberListClient members={members} />
+        {error ? (
+          <div className="rounded-2xl border border-red-200 bg-white p-6 text-sm text-red-600">회원 목록을 불러오지 못했습니다.</div>
+        ) : (
+          <MemberListClient members={members} canManageMembers={auth.isSuperAdmin || auth.activeRoles.some((role) => role.code === 'member_admin')} isSuperAdmin={auth.isSuperAdmin} />
+        )}
       </div>
     </main>
   )

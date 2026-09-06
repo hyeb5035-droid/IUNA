@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { getCurrentMemberAuth } from '../../../../lib/supabase/auth'
 import { createServerSupabaseClient } from '../../../../lib/supabase/server'
 import MeetingApprovalClient from './MeetingApprovalClient'
+import PaymentConfirmationClient, { type PendingPayment } from './PaymentConfirmationClient'
 
 export const dynamic = 'force-dynamic'
 
@@ -57,9 +58,13 @@ export default async function AdminMeetingsPage() {
     legal_name: op.legal_name ?? null,
   }))
 
+  const { data: paymentData, error: paymentError } = await supabase.rpc('get_pending_meeting_payments')
+  if (paymentError) console.error('[admin/meetings] payment query error:', paymentError.code, paymentError.message)
+  const payments: PendingPayment[] = paymentData ?? []
+
   return (
     <main className="min-h-screen bg-[#F7F6F2] px-4 py-8 text-[#111111] sm:px-6">
-      <div className="mx-auto max-w-3xl space-y-4">
+      <div className="mx-auto max-w-3xl space-y-8">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-xl font-semibold">모임 승인</h1>
@@ -74,6 +79,7 @@ export default async function AdminMeetingsPage() {
           )}
         </div>
         <MeetingApprovalClient meetings={meetings} operators={operators} />
+        <PaymentConfirmationClient payments={payments} />
       </div>
     </main>
   )

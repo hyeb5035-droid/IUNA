@@ -8,14 +8,16 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
 const supabase = createBrowserClient(supabaseUrl, supabaseKey)
 
 const APP_STATUS_LABEL: Record<string, string> = {
-  pending: '신청대기',
-  approved: '승인',
+  pending: '승인 대기',
+  payment_pending: '입금 대기',
+  approved: '참가 확정',
   rejected: '반려',
   cancelled: '취소',
 }
 
 const APP_STATUS_COLOR: Record<string, string> = {
   pending: 'bg-yellow-50 text-yellow-700 border-yellow-200',
+  payment_pending: 'bg-blue-50 text-blue-700 border-blue-200',
   approved: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   rejected: 'bg-red-50 text-red-600 border-red-200',
   cancelled: 'bg-slate-100 text-slate-500 border-slate-200',
@@ -48,7 +50,7 @@ export default function MeetingApplicationClient({ meetingId, meetingStatus, mee
   const canApply = meetingStatus === 'recruiting' && !isCreator && !application && !(isRegularNetworking && isIneligibleAssociate)
   const canCancel =
     application &&
-    (application.status === 'pending' || application.status === 'approved') &&
+    (application.status === 'pending' || application.status === 'payment_pending' || application.status === 'approved') &&
     meetingStatus !== 'active' &&
     meetingStatus !== 'ended'
 
@@ -125,6 +127,13 @@ export default function MeetingApplicationClient({ meetingId, meetingStatus, mee
           {application.status === 'rejected' && application.rejection_reason && (
             <div className="rounded-xl border border-red-200 bg-red-50 p-3">
               <p className="text-xs text-red-600">{application.rejection_reason}</p>
+            </div>
+          )}
+          {application.status === 'payment_pending' && (
+            <div className="rounded-xl border border-blue-200 bg-blue-50 p-3 text-sm text-blue-800">
+              <p className="font-medium">모임장이 신청을 승인했습니다.</p>
+              <p className="mt-1">참가 확정을 위해 모임 회비 3,000원을 입금해 주세요.</p>
+              <p className="mt-1 text-xs">납부 계좌 정보는 운영진에게 문의해 주세요. 입금 확인 후 참가가 최종 확정됩니다.</p>
             </div>
           )}
         </div>
