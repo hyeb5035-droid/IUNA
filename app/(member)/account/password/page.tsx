@@ -28,11 +28,11 @@ export default function PasswordChangePage() {
   }
 
   return (
-    <div className="mx-auto max-w-xl py-8">
+    <div className="mx-auto max-w-xl py-8 text-[#111111]">
       <h1 className="text-2xl font-bold">비밀번호 변경</h1>
       <form onSubmit={submit} className="mt-6 space-y-4 rounded-2xl border border-[#DDDCD7] bg-white p-6">
-        <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="새 비밀번호 (8자 이상)" className="w-full rounded-xl border px-4 py-3" />
-        <input type="password" value={confirm} onChange={(event) => setConfirm(event.target.value)} placeholder="새 비밀번호 확인" className="w-full rounded-xl border px-4 py-3" />
+        <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="새 비밀번호 (8자 이상)" className="w-full rounded-xl border border-[#DDDCD7] bg-white px-4 py-3 text-[#111111] placeholder:text-slate-400" />
+        <input type="password" value={confirm} onChange={(event) => setConfirm(event.target.value)} placeholder="새 비밀번호 확인" className="w-full rounded-xl border border-[#DDDCD7] bg-white px-4 py-3 text-[#111111] placeholder:text-slate-400" />
         <button className="w-full rounded-xl bg-black px-4 py-3 font-semibold text-white">변경하기</button>
         {message ? <p className="text-sm text-slate-600">{message}</p> : null}
       </form>
